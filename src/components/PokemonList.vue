@@ -17,3 +17,12 @@ const props = defineProps<{
 }>();
 
 </script>
+
+
+<style>
+.pokemon-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+</style>
