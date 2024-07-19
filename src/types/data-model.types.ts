@@ -16,3 +16,12 @@ export interface Pokemon {
 export interface PokemonCache {
   [key: string]: Pokemon;
 }
+
+
+export interface FiltersType {
+  selectedType: string;
+  minWeight: string;
+  maxWeight: string;
+  minHeight: string;
+  maxHeight: string;
+}
