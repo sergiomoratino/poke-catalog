@@ -24,4 +24,5 @@ export interface FiltersType {
   maxWeight: string;
   minHeight: string;
   maxHeight: string;
+  name: string;
 }

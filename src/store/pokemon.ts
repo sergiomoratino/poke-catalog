@@ -22,7 +22,7 @@ export const usePokemonStore = defineStore('pokemon', {
     async fetchPokemonsData() {
       try {
         const response = await axios.get(
-          'https://pokeapi.co/api/v2/pokemon?limit=50'
+          'https://pokeapi.co/api/v2/pokemon?limit=60'
         );
         const pokemonResults = response.data.results;
 

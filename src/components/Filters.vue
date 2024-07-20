@@ -1,24 +1,26 @@
 <template>
-  <div>
-    <div>
-      <label for="type">Type:</label>
-      <select id="type" v-model="internalSelectedType">
-        <option value="">All Types</option>
-        <option v-for="type in uniqueTypes" :key="type" :value="type">
-          {{ type }}
-        </option>
-      </select>
+  <div class="filter-container">
+    <div class="filter-group-row">
+      <SearchBar @search="searchPokemon" />
+
+      <div class="filter-type">
+        <label for="type">Type:</label>
+        <select id="type" v-model="internalSelectedType">
+          <option value="">All Types</option>
+          <option v-for="type in uniqueTypes" :key="type" :value="type">
+            {{ type }}
+          </option>
+        </select>
+      </div>
     </div>
-    <div>
-      <label for="weight-min">Weight (min):</label>
+    <div class="filter-group">
+      <span>Weight</span>
       <input
         id="weight-min"
         type="number"
         v-model="internalMinWeight"
         placeholder="Min weight"
       />
-
-      <label for="weight-max">Weight (max):</label>
       <input
         id="weight-max"
         type="number"
@@ -26,16 +28,14 @@
         placeholder="Max weight"
       />
     </div>
-    <div>
-      <label for="height-min">Height (min):</label>
+    <div class="filter-group">
+      <span>Height</span>
       <input
         id="height-min"
         type="number"
         v-model="internalMinHeight"
         placeholder="Min height"
       />
-
-      <label for="height-max">Height (max):</label>
       <input
         id="height-max"
         type="number"
@@ -48,22 +48,16 @@
 
 <script setup lang="ts">
 import { defineProps, defineEmits, ref, watch } from 'vue';
-
-interface Filters {
-  selectedType: string;
-  minWeight: string;
-  maxWeight: string;
-  minHeight: string;
-  maxHeight: string;
-}
+import SearchBar from '../components/SearchBar.vue';
+import { FiltersType } from '../types';
 
 const props = defineProps<{
   uniqueTypes: string[];
-  modelValue: Filters;
+  modelValue: FiltersType;
 }>();
 
 const emits = defineEmits<{
-  (e: 'update:modelValue', value: Filters): void;
+  (e: 'update:modelValue', value: FiltersType): void;
 }>();
 
 const internalSelectedType = ref(props.modelValue.selectedType);
@@ -71,6 +65,11 @@ const internalMinWeight = ref(props.modelValue.minWeight);
 const internalMaxWeight = ref(props.modelValue.maxWeight);
 const internalMinHeight = ref(props.modelValue.minHeight);
 const internalMaxHeight = ref(props.modelValue.maxHeight);
+const internalName = ref(props.modelValue.name);
+
+const searchPokemon = (term: string) => {
+  internalName.value = term;
+};
 
 watch(
   [
@@ -79,6 +78,7 @@ watch(
     internalMaxWeight,
     internalMinHeight,
     internalMaxHeight,
+    internalName,
   ],
   ([
     newSelectedType,
@@ -86,6 +86,7 @@ watch(
     newMaxWeight,
     newMinHeight,
     newMaxHeight,
+    newName,
   ]) => {
     emits('update:modelValue', {
       selectedType: newSelectedType,
@@ -93,7 +94,85 @@ watch(
       maxWeight: newMaxWeight,
       minHeight: newMinHeight,
       maxHeight: newMaxHeight,
+      name: newName,
     });
-  }
+  },
+  { immediate: true }
 );
 </script>
+
+<style>
+.filter-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  width: 60%;
+  margin: auto;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-group label {
+  margin-bottom: 0.5rem;
+}
+
+.filter-group input,
+.filter-group select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.filter-group-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  margin: auto;
+}
+
+.filter-group-row > * {
+  flex: 1;
+}
+
+.filter-type {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.filter-type select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .filter-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .filter-group {
+    flex: 1 1 45%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .filter-container {
+    gap: 2rem;
+  }
+
+  .filter-group {
+    flex: 1 1 30%;
+  }
+}
+</style>
