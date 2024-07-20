@@ -3,7 +3,9 @@
   <div v-if="pokemon" class="pokemon-details">
     <h1>{{ pokemon.name }}</h1>
     <img
-      :src="pokemon.sprites.front_default"
+      :src="imageSrc ?? ''"
+      @mouseenter="showBackImage"
+      @mouseleave="showFrontImage"
       alt="pokemon image"
       class="pokemon-image"
     />
@@ -44,9 +46,19 @@ const store = usePokemonStore();
 const route = useRoute();
 const pokemonId: string = route.params.id as string;
 const pokemon: Ref<Pokemon | null> = ref(null);
+const imageSrc = ref<string | null>(null);
 
 const loadPokemon = async () => {
   pokemon.value = await store.fetchPokemon(pokemonId);
+  imageSrc.value = pokemon.value?.sprites.front_default || null;
+};
+
+const showBackImage = () => {
+  imageSrc.value = pokemon.value?.sprites.back_default || null;
+};
+
+const showFrontImage = () => {
+  imageSrc.value = pokemon.value?.sprites.front_default || null;
 };
 
 onMounted(() => {
