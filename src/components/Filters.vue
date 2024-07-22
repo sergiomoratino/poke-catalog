@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import SearchBar from '../components/SearchBar.vue';
 import { FiltersType } from '../types';
 
