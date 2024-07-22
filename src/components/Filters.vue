@@ -101,7 +101,7 @@ watch(
 );
 </script>
 
-<style>
+<style scoped>
 .filter-container {
   display: flex;
   flex-direction: column;

@@ -15,7 +15,7 @@ defineProps<{
 }>();
 </script>
 
-<style>
+<style scoped>
 .pokemon-card-link {
   text-decoration: none;
   color: inherit;

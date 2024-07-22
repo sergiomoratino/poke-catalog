@@ -6,44 +6,59 @@ export const usePokemonStore = defineStore('pokemon', {
   state: () => ({
     pokemons: [] as Pokemon[],
     pokemonCache: {} as PokemonCache,
+    isLoading: false,
   }),
   actions: {
     async fetchPokemons() {
+      this.isLoading = true;
       try {
         const response = await axios.get(
-          'https://pokeapi.co/api/v2/pokemon?limit=30'
+          'https://pokeapi.co/api/v2/pokemon?limit=200'
         );
         this.pokemons = response.data.results;
       } catch (error) {
         console.error('Error fetching pokemons:', error);
+      } finally {
+        this.isLoading = false;
       }
     },
 
     async fetchPokemonsData() {
+      this.isLoading = true;
       try {
+        if (this.pokemons.length > 0) {
+          return;
+        }
+
         const response = await axios.get(
-          'https://pokeapi.co/api/v2/pokemon?limit=60'
+          'https://pokeapi.co/api/v2/pokemon?limit=200'
         );
         const pokemonResults = response.data.results;
 
-        // Fetch detailed information for each pokemon
         const detailedPokemons = await Promise.all(
           pokemonResults.map(async (pokemon: Pokemon) => {
-            const details = await axios.get(pokemon.url);
-            this.pokemonCache[details.data.name] = details.data;
-            return details.data;
+            if (this.pokemonCache[pokemon.id]) {
+              return this.pokemonCache[pokemon.id];
+            } else {
+              const details = await axios.get(pokemon.url);
+              this.pokemonCache[details.data.id] = details.data;
+              return details.data;
+            }
           })
         );
 
         this.pokemons = detailedPokemons;
       } catch (error) {
         console.error('Error fetching pokemons:', error);
+      } finally {
+        this.isLoading = false;
       }
     },
 
     async fetchPokemon(id: string) {
+      this.isLoading = true;
       if (this.pokemonCache[id]) {
-        console.log('Returning cached pokemon:', this.pokemonCache[id]);
+        this.isLoading = false;
         return this.pokemonCache[id];
       }
       try {
@@ -54,6 +69,8 @@ export const usePokemonStore = defineStore('pokemon', {
         return response.data;
       } catch (error) {
         console.error('Error fetching pokemon:', error);
+      } finally {
+        this.isLoading = false;
       }
     },
   },

@@ -1,6 +1,7 @@
 <template>
   <router-link to="/" class="back-link">Back to home</router-link>
-  <div v-if="pokemon" class="pokemon-details">
+  <Loader v-if="store.isLoading" />
+  <div v-else-if="pokemon" class="pokemon-details">
     <h1>{{ pokemon.name }}</h1>
     <img
       :src="imageSrc ?? ''"
@@ -33,7 +34,6 @@
       </ul>
     </div>
   </div>
-  <div v-else class="loading">Loading...</div>
 </template>
 
 <script setup lang="ts">
@@ -41,6 +41,7 @@ import { useRoute } from 'vue-router';
 import { usePokemonStore } from '../store/pokemon';
 import { onMounted, ref, Ref } from 'vue';
 import { Pokemon } from '../types';
+import Loader from '../components/Loader.vue';
 
 const store = usePokemonStore();
 const route = useRoute();

@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <Loader v-if="store.isLoading" />
+  <div v-else>
     <Filters :uniqueTypes="uniqueTypes" v-model="filters" />
     <PokemonList :pokemons="filteredPokemons" />
   </div>
@@ -10,6 +11,7 @@ import { ref, computed, onMounted } from 'vue';
 import { usePokemonStore } from '../store/pokemon';
 import PokemonList from '../components/PokemonList.vue';
 import Filters from '../components/Filters.vue';
+import Loader from '../components/Loader.vue';
 import { Pokemon, FiltersType } from '../types';
 
 const store = usePokemonStore();
@@ -57,7 +59,6 @@ const filteredPokemons = computed<Pokemon[]>(() => {
     return matchesSearch && matchesType && matchesWeight && matchesHeight;
   });
 });
-
 
 onMounted(async () => {
   await store.fetchPokemonsData();
