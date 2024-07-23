@@ -1,10 +1,12 @@
 <template>
   <div class="filter-container">
     <div class="filter-group-row">
+      <!-- Search bar component for filtering Pokémon by name -->
       <SearchBar @search="searchPokemon" />
 
       <div class="filter-type">
         <label for="type">Type:</label>
+        <!-- Dropdown for selecting Pokémon type -->
         <select id="type" v-model="internalSelectedType">
           <option value="">All Types</option>
           <option v-for="type in uniqueTypes" :key="type" :value="type">
@@ -15,6 +17,7 @@
     </div>
     <div class="filter-group">
       <span>Weight</span>
+      <!-- Input fields for minimum and maximum weight filters -->
       <input
         id="weight-min"
         type="number"
@@ -30,6 +33,7 @@
     </div>
     <div class="filter-group">
       <span>Height</span>
+      <!-- Input fields for minimum and maximum height filters -->
       <input
         id="height-min"
         type="number"
@@ -60,6 +64,7 @@ const emits = defineEmits<{
   (e: 'update:modelValue', value: FiltersType): void;
 }>();
 
+// Internal state variables to manage filter values
 const internalSelectedType = ref(props.modelValue.selectedType);
 const internalMinWeight = ref(props.modelValue.minWeight);
 const internalMaxWeight = ref(props.modelValue.maxWeight);
@@ -71,6 +76,7 @@ const searchPokemon = (term: string) => {
   internalName.value = term;
 };
 
+// Watch for changes in internal filter values and emit updated values to parent
 watch(
   [
     internalSelectedType,

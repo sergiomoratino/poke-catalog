@@ -49,15 +49,18 @@ const pokemonId: string = route.params.id as string;
 const pokemon: Ref<Pokemon | null> = ref(null);
 const imageSrc = ref<string | null>(null);
 
+// Fetch Pokemon data based on the ID from the route parameters
 const loadPokemon = async () => {
   pokemon.value = await store.fetchPokemon(pokemonId);
   imageSrc.value = pokemon.value?.sprites.front_default || null;
 };
 
+// Show the back image when mouse enters the image
 const showBackImage = () => {
   imageSrc.value = pokemon.value?.sprites.back_default || null;
 };
 
+// Show the front image when mouse leaves the image
 const showFrontImage = () => {
   imageSrc.value = pokemon.value?.sprites.front_default || null;
 };
