@@ -34,8 +34,8 @@ This project is a responsive web application (mobile first) that displays a cata
 
 1. **Clone the repository**
    ```sh
-   git clone https://github.com/your-username/vue3-pokemon-catalog.git
-   cd vue3-pokemon-catalog
+   git clone https://github.com/sergiomoratino/poke-catalog.git
+   cd poke-catalog
 
 2. **Install dependencies**
     ```sh
