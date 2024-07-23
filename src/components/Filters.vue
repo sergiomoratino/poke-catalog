@@ -113,8 +113,11 @@ watch(
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
-  width: 60%;
   margin: auto;
+  margin-bottom: 20px;
+  background-color: rgb(58, 58, 58);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .filter-group {
@@ -145,6 +148,11 @@ watch(
 
 .filter-group-row > * {
   flex: 1;
+}
+
+.filter-group-row input {
+  margin: 0; 
+  padding: 8px;
 }
 
 .filter-type {

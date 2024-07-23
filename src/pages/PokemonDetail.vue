@@ -75,7 +75,7 @@ onMounted(() => {
   display: inline-block;
   margin-bottom: 20px;
   padding: 10px 15px;
-  background-color: rgba(60, 90, 166);
+  background-color: rgb(255,0,0);
   color: white;
   text-decoration: none;
   border-radius: 5px;
@@ -83,7 +83,7 @@ onMounted(() => {
 }
 
 .back-link:hover {
-  background-color: rgba(60, 90, 166, 0.8);
+  background-color: rgb(255,0,0, 0.6);
 }
 
 .pokemon-details {

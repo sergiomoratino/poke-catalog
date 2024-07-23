@@ -24,6 +24,10 @@ defineProps<{
   justify-content: center;
   gap: 1rem;
   padding: 1rem;
+  background-color: rgb(58, 58, 58);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 @media (min-width: 600px) {
